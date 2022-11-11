@@ -282,5 +282,3 @@ void ht_delete(HashTable* table, char* key) {
         }
     }
 }
-
-

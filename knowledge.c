@@ -208,4 +208,3 @@ void knowledge_write(FILE *f) {
 			}
 		}
 	}
-}

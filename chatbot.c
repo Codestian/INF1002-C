@@ -410,6 +410,3 @@ int chatbot_do_save(int inc, char *inv[], char *response, int n) {
 	return 0;
 
 }
-
-
-
