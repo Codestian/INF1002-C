@@ -369,7 +369,7 @@ int chatbot_do_save(int inc, char *inv[], char *response, int n) {
 		return 0;
 	}
 	int startindex = 1;
-	if (compare_token(inv[1], "as") != 0 || compare_token(inv[1], "to") != 0){
+	if (compare_token(inv[1], "as") != 0){
 		snprintf(response, n, "%s", "Please enter a valid filename!");
 		return 0;
 	} else {
