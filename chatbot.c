@@ -284,13 +284,13 @@ int chatbot_do_question(int inc, char *inv[], char *response, int n) {
 		strcpy(entityquestion, entity);
 		char ans[MAX_RESPONSE];
 		if (strlen(fillerword)){
-            prompt_user(ans, MAX_RESPONSE, "I don't know. %s %s %s?", inv[0], fillerword, entityquestion);
+            prompt_user(ans, MAX_RESPONSE, "Hmm, I don't know. %s %s %s?", inv[0], fillerword, entityquestion);
 		} else {
-		    prompt_user(ans, MAX_RESPONSE, "I don't know. %s %s?", inv[0], entityquestion);
+		    prompt_user(ans, MAX_RESPONSE, "Hmm, I don't know. %s %s?", inv[0], entityquestion);
 		}
 		result = knowledge_put(inv[0], entity , ans);
 		if (result == KB_OK){
-			snprintf(response, n, "Thank you.");
+			snprintf(response, n, "Thank you!");
 		} else if (result == KB_NOMEM) {
 			snprintf(response, n, "Out of Memory");
 		} else if (result == KB_INVALID) {
@@ -334,7 +334,7 @@ int chatbot_is_reset(const char *intent) {
  */
 int chatbot_do_reset(int inc, char *inv[], char *response, int n) {
 	knowledge_reset();
-	snprintf(response, MAX_RESPONSE, "Chatbot reset");
+	snprintf(response, MAX_RESPONSE, "Chatbot has been reset");
 	return 0;
 }
 
@@ -369,7 +369,7 @@ int chatbot_do_save(int inc, char *inv[], char *response, int n) {
 		return 0;
 	}
 	int startindex = 1;
-	if (compare_token(inv[1], "as") != 0){
+	if (compare_token(inv[1], "as") != 0 || compare_token(inv[1], "to") != 0){
 		snprintf(response, n, "%s", "Please enter a valid filename!");
 		return 0;
 	} else {
@@ -405,7 +405,7 @@ int chatbot_do_save(int inc, char *inv[], char *response, int n) {
 	knowledge_write(file);
 	fclose(file);
 
-	snprintf(response, n, "My knowledge has been saved to %s", filename);
+	snprintf(response, n, "My knowledge has been saved to %s!", filename);
 
 	return 0;
 
