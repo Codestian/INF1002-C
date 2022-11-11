@@ -9,8 +9,7 @@ A simple chatbot implemented in C for the INF1002 module.
 `save to $FILENAME.ini`
 
 ### Load knowledge base to ini file
-`save as $FILENAME.ini`
-`save to $FILENAME.ini`
+`load $FILENAME.ini`
 
 ## Compiling source code
 
