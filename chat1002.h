@@ -28,6 +28,8 @@
 #define KB_INVALID  -2
 #define KB_NOMEM    -3
 
+/* Delimiters for splitting input to words */
+const char *delimiters = " ?\t\n";
 
 typedef struct node_struct Node; //Create a data structure Node to store key, intent, entity, responses from user.
 struct node_struct {
@@ -93,11 +95,5 @@ void handle_collision(HashTable* table, unsigned long index, Node* item);
 int ht_insert(HashTable* table, char* key, const char* intent, const char* entity, const char* response);
 Node* ht_search(HashTable* table, char* key);
 void ht_delete(HashTable* table, char* key);
-
-
-
-
-
-
 
 #endif
