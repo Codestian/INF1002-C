@@ -14,6 +14,7 @@
 #include "chat1002.h"
 #include "chatbot.c" //uncomment this line if you have error.
 
+
 /*
  * Main loop.
  */
@@ -69,6 +70,7 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 
+
 /*
  * Utility function for comparing string case-insensitively.
  *
@@ -98,6 +100,7 @@ int compare_token(const char *token1, const char *token2) {
 		return 1;
 
 }
+
 
 /*
  * Prompt the user.
