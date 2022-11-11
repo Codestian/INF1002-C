@@ -166,6 +166,7 @@ int chatbot_is_load(const char *intent) {
  *   0 (the chatbot always continues chatting after loading knowledge)
  */
 int chatbot_do_load(int inc, char *inv[], char *response, int n) {
+	// checks input is less that 2 words
 	if (inc < 2) {
 		snprintf(response, n, "%s", "Please enter a valid filename!");
 		return 0;
@@ -177,7 +178,9 @@ int chatbot_do_load(int inc, char *inv[], char *response, int n) {
 	char * filename = inv[startindex];
 	int inifound = 0;
 	char * checkini = strchr(filename, '.');
+	// check if word contains the "." keyword
 	if (checkini != NULL){
+		// checks if word contains the ".ini" keyword
 		if(!compare_token(checkini, ".ini")){
 			inifound = 1;
 		}
@@ -187,9 +190,11 @@ int chatbot_do_load(int inc, char *inv[], char *response, int n) {
 		return 0;
 	}
 	fp = fopen(filename, "r");
+	// checks if file exists
 	if (fp != NULL) {
 		int result = knowledge_read(fp);
 		fclose(fp);
+		// check if hashtable is full
 		if (result == KB_NOMEM){
 			snprintf(response, n, "Out of Memory");
 		} else {
@@ -250,9 +255,12 @@ int chatbot_do_question(int inc, char *inv[], char *response, int n) {
 	}
 
 
+	//checks if input is more than 1 word
 	if (inc > 1) {
+		//checks if second word of input contains the keywords "is" or "are"
 		if (compare_token(inv[1], "is") == 0 || compare_token(inv[1], "are") == 0){
             startindex = 2;
+			//checks if input contains less than 3 words
 			if (startindex == 2 && inc < 3){
 				snprintf(response, n, "Please ask a question with an entity.");
 				free(entity);
@@ -261,6 +269,7 @@ int chatbot_do_question(int inc, char *inv[], char *response, int n) {
 			}
 			strcpy(fillerword, inv[1]);
 		} 
+		// is to get the entity
         for(int i = startindex; i < inc; i++){
                 strcat(entity, inv[i]);
 			if (i != sizeof(inv - 1)){
@@ -283,11 +292,13 @@ int chatbot_do_question(int inc, char *inv[], char *response, int n) {
 		}
 		strcpy(entityquestion, entity);
 		char ans[MAX_RESPONSE];
+		// repeats the user's questions
 		if (strlen(fillerword)){
             prompt_user(ans, MAX_RESPONSE, "Hmm, I don't know. %s %s %s?", inv[0], fillerword, entityquestion);
 		} else {
 		    prompt_user(ans, MAX_RESPONSE, "Hmm, I don't know. %s %s?", inv[0], entityquestion);
 		}
+		// inserts into chat bot's knowledge base (hashtable)
 		result = knowledge_put(inv[0], entity , ans);
 		if (result == KB_OK){
 			snprintf(response, n, "Thank you!");
@@ -364,11 +375,13 @@ int chatbot_is_save(const char *intent) {
  *   0 (the chatbot always continues chatting after saving knowledge)
  */
 int chatbot_do_save(int inc, char *inv[], char *response, int n) {
+	//checks the input if is has less than 2 words
 	if (inc < 2) {
 		snprintf(response, n, "%s", "Please enter a valid filename!");
 		return 0;
 	}
 	int startindex = 1;
+	//checks the second item of the input if it contains the "as" keyword
 	if (compare_token(inv[1], "as") != 0){
 		snprintf(response, n, "%s", "Please enter a valid filename!");
 		return 0;
@@ -376,17 +389,20 @@ int chatbot_do_save(int inc, char *inv[], char *response, int n) {
 		startindex = 2;
 	}
 
+	//checks the input if it contains the keyword "as" and if the amount of words in the input in less than 3
 	if (startindex == 2 && inc < 3) {
 		snprintf(response, n, "%s", "Please enter a valid filename!");
 		return 0;
 	}
 
+	//checks the filename
 	char * filename = inv[startindex];
 	if (filename[0] == 0) {
 		snprintf(response, n, "%s", "Please enter a valid filename!");
 		return 0;
 	}
 
+	//checks if filename contains the keyword ".ini"
 	int inifound = 0;
 	char * checkini = strchr(filename, '.');
 	if (checkini != NULL){
@@ -395,17 +411,41 @@ int chatbot_do_save(int inc, char *inv[], char *response, int n) {
 		}
 	}
 
+	//as above
 	if (!inifound){
 		snprintf(response, n, "%s", "Please enter a valid filename!");
 		return 0;
 	}
 
 	FILE * file;
+	file = fopen(filename, "r");
+	//checks if file exists
+	if (file != NULL) {
+		char ans[3];
+		//asks user if he/she wants to overwrite the file
+		prompt_user(ans, 3, "%s is present. Do you want to overwrite it? [Y/N]", filename);
+		fclose(file);
+
+		switch (ans[0]) {
+			case 'N':
+			case 'n':
+				snprintf(response, n, "My knowledge is not saved as the file provided exists");
+				return 0;
+			case 'y':
+			case 'Y':
+				break;
+			default:
+				snprintf(response, n, "I do not understand the response, therefore my knowledge is not saved.");
+				return 0;
+
+		}
+	}
+	//creates / overwrites the knowledge base (.ini)
 	file = fopen(filename, "w");
 	knowledge_write(file);
 	fclose(file);
-
-	snprintf(response, n, "My knowledge has been saved to %s!", filename);
+	
+	snprintf(response, n, "My knowledge has been saved to %s", filename);
 
 	return 0;
 
