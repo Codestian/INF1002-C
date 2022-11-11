@@ -197,6 +197,7 @@ void knowledge_write(FILE *f) {
 			}
 		}
 	}
+	
 	fputs("[who]\n", f); //insert intent onto file
 	if (ht != NULL){ //if hashtable is not empty then iterate through it and get all items with who intent
 		for (int i = 0; i<ht->size; i++){
@@ -208,5 +209,3 @@ void knowledge_write(FILE *f) {
 		}
 	}
 }
-
-

@@ -28,6 +28,10 @@
 #define KB_INVALID  -2
 #define KB_NOMEM    -3
 
+/* Custom names for the chatbot and end user */
+#define BOT_NAME "Chatbot"
+#define USER_NAME "User"
+
 /* Delimiters for splitting input to words */
 const char *delimiters = " ?\t\n";
 

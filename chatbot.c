@@ -46,25 +46,25 @@
 #include "knowledge.c" //uncomment this line if you have error.
 
 /*
- * Get the name of the chatbot.
+ * Get the name of the chatbot from chat1002.h
  *
  * Returns: the name of the chatbot as a null-terminated string
  */
 const char *chatbot_botname() {
 
-	return "Chatbot";
+	return BOT_NAME;
 
 }
 
 
 /*
- * Get the name of the user.
+ * Get the name of the user from chat1002.h
  *
  * Returns: the name of the user as a null-terminated string
  */
 const char *chatbot_username() {
 
-	return "User";
+	return USER_NAME;
 
 }
 
@@ -136,7 +136,6 @@ int chatbot_is_exit(const char *intent) {
 int chatbot_do_exit(int inc, char *inv[], char *response, int n) {
 
 	snprintf(response, n, "Goodbye!");
-
 	return 1;
 
 }
