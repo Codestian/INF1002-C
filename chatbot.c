@@ -298,6 +298,13 @@ int chatbot_do_question(int inc, char *inv[], char *response, int n) {
 		} else {
 		    prompt_user(ans, MAX_RESPONSE, "Hmm, I don't know. %s %s?", inv[0], entityquestion);
 		}
+		if (strlen(ans) < 1){
+			snprintf(response, n, "Invalid answer!");	
+			free(entityquestion);
+			free(fillerword);
+			free(entity);
+			return 0;
+		}
 		// inserts into chat bot's knowledge base (hashtable)
 		result = knowledge_put(inv[0], entity , ans);
 		if (result == KB_OK){
