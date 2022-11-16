@@ -32,7 +32,7 @@ static LinkedList* allocate_memory_list () {
 
 static LinkedList* linkedlist_insert(LinkedList* list, Node* item) {
     // Inserts the item onto the Linked List
-    if (!list) { //Create a linkedlist at memory address if it doesn't exist.
+    if (!list) { //Create a linkedlist at memory address if it doesn't exist/is empty.
         LinkedList* head = allocate_memory_list(); //Allocate memory for Linkedlist obj to be inserted at memory address with collision.
         head->item = item; //Set item of head to be the item/Node which is supposed to be stored at collision address.
         head->next = NULL; //Set memory address of next item in linkedlist obj to null.
