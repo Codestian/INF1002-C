@@ -42,7 +42,7 @@ void hashtable_callup(){
 	if (ht == NULL)	ht = create_table(CAPACITY); //If hashtable does not exist then create a hashtable.
 }
 
-int knowledge_get(const char *intent, const char *entity, char *response, int n) {;
+int knowledge_get(const char *intent, const char *entity, char *response, int n) {
 	if (chatbot_is_question(intent) == KB_INVALID) { //If first word of user is not intent then return KB_invalid/not recognised.
 		return KB_INVALID;
 	}
