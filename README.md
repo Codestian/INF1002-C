@@ -19,5 +19,4 @@ A simple chatbot implemented in C for the INF1002 module.
 
 ### Compiling for Windows
 
-`????? output/chatbot.exe`
-help to fix pls ^
+`gcc -o output/chatbot.exe main.c`
